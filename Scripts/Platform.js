@@ -1,4 +1,6 @@
 	var boxes = [];
+	var dScore = 0;
+	var n = 1;
 
 	class Crate { constructor(x, y, width, height, crateImg)
 	{
@@ -29,7 +31,15 @@
 				player.velY = 0;
 			}
 
-			boxes[i].y++;
+			if(score > dScore + 10)
+			{
+				n+=0.5;
+				dScore = Math.floor(score);
+			}
+			else
+			{
+				boxes[i].y += n;
+			}
 
 			if(boxes[i].y > windowHeight)
 			{
@@ -70,5 +80,6 @@
 			}
 		}
 
-		player.y++;			
+		player.y += n;	
+	
 	}

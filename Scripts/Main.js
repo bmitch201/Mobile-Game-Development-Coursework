@@ -8,6 +8,7 @@ document.body.addEventListener("keyup", function (e) { keys[e.keyCode] = false; 
 
 var playerImg = new Image();
 var crateImg = new Image();
+var spikeImg = new Image();
 
 var jumpAudio = new Audio();
 
@@ -184,6 +185,28 @@ function Update()
 		vUpdate();
 		cUpdate();
 		pUpdate();
+
+		canvasM.addEventListener("click", function (event) 
+		{
+			if(event.y < windowHeight / 2)
+			{
+				player.velY = 0;
+
+				if(playerDir == null)
+				{
+					if(player.y == playerY)
+					{		
+						jumpAudio.play();
+						player.velY-=23;
+					}
+				}
+				else if (playerDir == "b")
+				{
+					jumpAudio.play();
+					player.velY-=23;
+				}
+			}
+		});
 
  		if (keys[32])
 		{

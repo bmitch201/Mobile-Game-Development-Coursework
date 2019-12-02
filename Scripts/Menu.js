@@ -20,7 +20,7 @@ function mStart()
 	ctxM.font = "50px Arial";
 	ctxM.fillStyle = "black";
 	ctxM.textAlign = "center";
-	ctxM.fillText("Title", windowWidth / 2, 50);
+	ctxM.fillText("Jumpy Box", windowWidth / 2, 50);
 
 	ctxM.beginPath();
 	ctxM.fill();
@@ -81,6 +81,8 @@ function mUpdate()
 			boxes.length = 0;
 			player = 0;
 			score = 0;
+			n = 1;
+			dScore = 0;
 			GameSetup();
 			backgroundAudio.currentTime = 0;
 			backgroundAudio.play();
@@ -96,6 +98,8 @@ function mUpdate()
 			boxes.length = 0;
 			player = 0;
 			score = 0;
+			n = 1;
+			dScore = 0;
 			GameSetup();
 			mStart();
 		} 
