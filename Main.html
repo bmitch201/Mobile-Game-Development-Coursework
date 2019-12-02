@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MGD1 Coursework</title>
+<style>
+body
+{
+	overflow: hidden;
+}
+</style>	
+
+</head>
+<body>
+	<canvas id="canvasMenu" style="
+	z-index: 2;
+	position:absolute;
+	left:0px;
+	top:0px;">
+	</canvas>
+	<canvas id="canvasForTheGame" style=
+	"z-index: 1;
+	position:absolute;
+	left:0px;
+	top:0px;">
+	</canvas>	
+	<canvas id="canvasBackground" style=
+	"z-index: 0;
+	position:absolute;
+	left:0px;
+	top:0px;">
+	</canvas>
+	<script src ="Scripts/Background.js"></script>
+	<script src ="Scripts/Player.js"></script>	
+	<script src ="Scripts/Platform.js"></script>	
+	<script src ="Scripts/Menu.js"></script>
+	<script src ="Scripts/VirtualGamepad.js"></script>
+	<script src ="Scripts/Main.js"></script>
+</body>
+</html>
