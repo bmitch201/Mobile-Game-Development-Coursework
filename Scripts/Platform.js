@@ -21,7 +21,9 @@
 			//Create the platform on canvas with collison box
 			ctxG.rect(boxes[i].height, boxes[i].width, boxes[i].y, boxes[i].x);
 			ctxG.drawImage(boxes[i].srcImg, boxes[i].x, boxes[i].y, boxes[i].width, boxes[i].height);
-			ctxG.rect(spikes[i].x, spikes[i].y, spikes[i].width, spikes[i].height);
+			
+			//Create the spikes for the platforms
+			ctxG.rect(spikes[i].x, spikes[i].y, spikes[i].width/2, spikes[i].height);
 			ctxG.drawImage(spikes[i].img, spikes[i].x, spikes[i].y, spikes[i].width, spikes[i].height);
 
 			//If the players collison direction is left or right
@@ -72,9 +74,6 @@
 							//Position the platform on the right hand side
 							boxes[i].x = Math.floor(Math.random() * canvas.width);
 						}
-
-						spikes[i].x = Math.floor((Math.random() * boxes[i].width) + boxes[i].x - spikes[i].x);
-						spikes[i].y = boxes[i].y - boxes[i].height;
 					}
 					else
 					{
@@ -93,9 +92,6 @@
 							//Position the platform on the right hand side
 							boxes[i].x = boxes[i - 1].x + 500;
 						}
-
-						spikes[i].x = Math.floor((Math.random() * boxes[i].width) + boxes[i].x - spikes[i].x);
-						spikes[i].y = boxes[i].y - boxes[i].height;
 					}
 				}
 				//If the index is equal to 0
@@ -115,11 +111,12 @@
 					{
 						//Position the platform on the right hand side
 						boxes[i].x = boxes[boxes.length - 1].x + 500;
-					}
-
-					spikes[i].x = Math.floor((Math.random() * boxes[i].width) + boxes[i].x - spikes[i].x);
-					spikes[i].y = boxes[i].y - boxes[i].height;
+					}		
 				}
+
+				//Sets the location for the spike on the bottom of the platform
+				spikes[i].x = Math.floor((Math.random() * (boxes[i].width - spikes[i].width)) + boxes[i].x);
+				spikes[i].y = boxes[i].y + boxes[i].height;
 			}
 		}
 

@@ -199,6 +199,7 @@ function GameSetup()
 		boxes.push(new Crate(boxes[14].x + 500, -950, platform.width, platform.height, platform.img));
 	}
 
+	//For each platform create a spike
 	for(var i = 0; i < boxes.length; i++)
 	{
 		spikes.push(new Spike(-100, -100, 40, 50, spikeImg));
