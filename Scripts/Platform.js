@@ -14,33 +14,45 @@
 
 	function cUpdate()
 	{
+		//Clear the game context
 		ctxG.clearRect(0, 0, windowWidth, windowHeight);
 
+		//For each platform
 		for (var i = 0; i < boxes.length; i++) 
 		{
-			// show the boxes on canvas
+			//Create the platform on canvas with collison box
 			ctxG.rect(boxes[i].height, boxes[i].width, boxes[i].y, boxes[i].x);
 			ctxG.drawImage(boxes[i].srcImg, boxes[i].x, boxes[i].y, boxes[i].width, boxes[i].height);
 			
+			//If the players collison direction is left or right
 			if (playerDir === "l" || playerDir === "r") 
 			{
+				//Don't allow them character to move inside the collided object
 				player.velX = 0;
 			} 
+			//Else if the players collsion direction is top or bottom
 			else if(playerDir === "t" || playerDir === "b")
 			{
+				//Don't allow them character to move inside the collided object
 				player.velY = 0;
 			}
-
+		
+			//If the score is 10 more than the previous score
 			if(score > dScore + 10)
 			{
+				//Add 0.5 to the game speed
 				n+=0.5;
+				//Set the new previous score
 				dScore = Math.floor(score);
+				boxes[i].y += n;
 			}
 			else
 			{
+				//Move the boxes by n
 				boxes[i].y += n;
 			}
 
+			//
 			if(boxes[i].y > windowHeight)
 			{
 				if(i > 0)

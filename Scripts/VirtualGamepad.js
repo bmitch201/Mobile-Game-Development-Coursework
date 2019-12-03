@@ -1,5 +1,5 @@
 //LEAVE THIS FOR IF I HAVE TIME. FOCUS ON GAME OBJECTS RATHER THAN THE VIRTUAL GAMEPAD
-
+/*
 var arrowButton = {
 	x : windowWidth - 125,
 	y : windowHeight - 125,
@@ -64,3 +64,4 @@ function vUpdate()
 		}
 	} );
 }
+*/
