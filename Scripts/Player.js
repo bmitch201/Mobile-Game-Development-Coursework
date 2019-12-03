@@ -21,30 +21,35 @@
 	
 	function pUpdate() 
 	{
+		//If the player collison direction is bottom
 		if(playerDir == "b")
 		{  
+			//Set gravity and player Y speed to 0
 			gravitySpeed = 0;
 			player.velY = 0;
 		}
+		//If the player collsion detection is top
 		else if(playerDir == "t")
 		{
+			//Decrease player Y speed
 			player.velY = player.velY/1.25;
 		}
+		//If neither
 		else
 		{
+			//If player's y is not equal to the previous Y pos of player
 			if(playerY != player.y)
 			{
+				//Increase gravity speed
 				gravitySpeed += gravity;
 			}
+			//If player's y is equal to the previous Y pos of player
 			else
 			{	
+				//Set gravity to 0
 				gravitySpeed = 0;
+				//Set player velcoity to 0
 				player.velY = 0;
-				
-				if(player.y < windowHeight / 1.15)
-				{
-					gravitySpeed += gravity;
-				}
 			}
 		}
 

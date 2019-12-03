@@ -7,6 +7,8 @@ var title;
 var newHS = false;
 
 var buttonAudio = new Audio();
+var backgroundImg = new Image();
+backgroundImg.src = "Assets/Background.png";
 
 var startBtn = {
 	x : windowWidth/2 - 50,
@@ -17,37 +19,40 @@ var startBtn = {
 
 function mStart()
 {
+	ctxM.drawImage(backgroundImg, 0, 0, windowWidth, windowHeight);
+
 	//Sets up the text to be displayed to the player
 	ctxM.font = "50px Arial";
-	ctxM.fillStyle = "black";
+	ctxM.fillStyle = "white";
 	ctxM.textAlign = "center";
 	ctxM.fillText("Jumpy Box", windowWidth / 2, 50);
 
-	ctxM.font = "20px Arial";
-	ctxM.fillStyle = "white";
-	ctxM.textAlign = "center";
-	ctxM.fillText("Start", startBtn.x + startBtn.width / 2, startBtn.y +  startBtn.height / 2 + 5);
-
 	ctxM.font = "30px Arial";
-	ctxM.fillStyle = "black";
+	ctxM.fillStyle = "white";
 	ctxM.textAlign = "center";
 	ctxM.fillText("Movement - Left Arrow Key, Move Left", windowWidth / 2, windowHeight / 1.5);
 
 	ctxM.font = "30px Arial";
-	ctxM.fillStyle = "black";
+	ctxM.fillStyle = "white";
 	ctxM.textAlign = "center";
 	ctxM.fillText("Right Arrow Key, Move Right", windowWidth / 2, windowHeight / 1.5 + 50);
 
 	ctxM.font = "30px Arial";
-	ctxM.fillStyle = "black";
+	ctxM.fillStyle = "white";
 	ctxM.textAlign = "center";
-	ctxM.fillText("Space Key, Jump", windowWidth / 2, windowHeight / 1.5 + 100);	
-
+	ctxM.fillText("Space Key, Jump", windowWidth / 2, windowHeight / 1.5 + 100);
+	
 	//Draw the button on the screen
 	ctxM.beginPath();
 	ctxM.fill();
+	ctxM.fillStyle = "white";
+	ctxM.fillRect(startBtn.x, startBtn.y, startBtn.width, startBtn.height);	
+
+	ctxM.font = "20px Arial";
 	ctxM.fillStyle = "black";
-	ctxM.fillRect(startBtn.x, startBtn.y, startBtn.width, startBtn.height);
+	ctxM.textAlign = "center";
+	ctxM.fillText("Start", startBtn.x + startBtn.width / 2, startBtn.y +  startBtn.height / 2 + 5);	
+
 }
 
 function mUpdate()
@@ -85,6 +90,7 @@ function mUpdate()
 			state = states[1];
 			ctxG.clearRect(0, 0, windowWidth, windowHeight);
 			boxes.length = 0;
+			spikes.length = 0;
 			player = 0;
 			score = 0;
 			n = 1;
@@ -103,6 +109,7 @@ function mUpdate()
 			state = states[0];
 			ctxG.clearRect(0, 0, windowWidth, windowHeight);
 			boxes.length = 0;
+			spikes.length = 0;
 			player = 0;
 			score = 0;
 			n = 1;
@@ -123,26 +130,26 @@ function mPause()
 
 	//Set up the text for the pause menu
 	ctxM.font = "50px Arial";
-	ctxM.fillStyle = "black";
+	ctxM.fillStyle = "white";
 	ctxM.textAlign = "center";
 	ctxM.fillText("Pause", windowWidth / 2, 50);
 
 	//Display the users high score
 	ctxM.font = "50px Arial";
-	ctxM.fillStyle = "black";
-	ctxM.textAlign = "center";
-	ctxM.fillText("High Score: " + Math.floor(highScore), windowWidth / 2, windowHeight / 2 - 50);
-
-	ctxM.font = "20px Arial";
 	ctxM.fillStyle = "white";
 	ctxM.textAlign = "center";
-	ctxM.fillText("Resume", startBtn.x + startBtn.width / 2, startBtn.y +  startBtn.height / 2 + 5);	
+	ctxM.fillText("High Score: " + Math.floor(highScore), windowWidth / 2, windowHeight / 2 - 50);	
 	
 	//Create the resume button
 	ctxM.beginPath();
 	ctxM.fill();
-	ctxM.fillStyle = "black";
+	ctxM.fillStyle = "white";
 	ctxM.fillRect(startBtn.x, startBtn.y, startBtn.width, startBtn.height);
+
+	ctxM.font = "20px Arial";
+	ctxM.fillStyle = "black";
+	ctxM.textAlign = "center";
+	ctxM.fillText("Resume", startBtn.x + startBtn.width / 2, startBtn.y +  startBtn.height / 2 + 5);
 }
 
 function mGameOver()
@@ -155,13 +162,13 @@ function mGameOver()
 
 	//Set up the text for the game over scene
 	ctxM.font = "50px Arial";
-	ctxM.fillStyle = "black";
+	ctxM.fillStyle = "white";
 	ctxM.textAlign = "center";
 	ctxM.fillText("Game Over", windowWidth / 2, 50);
 
 	//Display the users final score
 	ctxM.font = "50px Arial";
-	ctxM.fillStyle = "black";
+	ctxM.fillStyle = "white";
 	ctxM.textAlign = "center";
 	ctxM.fillText("Score: " + Math.floor(score), windowWidth / 2, windowHeight / 2 - 20);
 
@@ -179,22 +186,22 @@ function mGameOver()
 	//Create the retry button
 	ctxM.beginPath();
 	ctxM.fill();
-	ctxM.fillStyle = "black";
+	ctxM.fillStyle = "white";
 	ctxM.fillRect(startBtn.x, startBtn.y + 100, startBtn.width, startBtn.height);
 
 	ctxM.font = "20px Arial";
-	ctxM.fillStyle = "white";
+	ctxM.fillStyle = "black";
 	ctxM.textAlign = "center";
 	ctxM.fillText("Retry", startBtn.x + startBtn.width / 2, (startBtn.y + 100) +  startBtn.height / 2 + 5);
 
 	//Create the menu button 
 	ctxM.beginPath();
 	ctxM.fill();
-	ctxM.fillStyle = "black";
+	ctxM.fillStyle = "white";
 	ctxM.fillRect(startBtn.x, startBtn.y + 200, startBtn.width, startBtn.height);
 
 	ctxM.font = "20px Arial";
-	ctxM.fillStyle = "white";
+	ctxM.fillStyle = "black";
 	ctxM.textAlign = "center";
 	ctxM.fillText("Menu", startBtn.x + startBtn.width / 2, (startBtn.y + 200) +  startBtn.height / 2 + 5);
 }

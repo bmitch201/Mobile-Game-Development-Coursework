@@ -25,15 +25,41 @@ var platform = {
 	img : crateImg
 };
 
+var bckg1 = {
+	width: windowWidth,
+	height: windowHeight,
+	x: 0,
+	y: 0,
+	img: backgroundImg
+};
+
+var bckg2 = {
+	width: windowWidth,
+	height: windowHeight,
+	x: 0,
+	y: -windowHeight,
+	img: backgroundImg
+};
+
+class Spike { constructor(x, y, width, height, spikeImg)
+{
+	this.x = x;
+	this.y = y;
+	this.width = width;
+	this.height = height;
+	this.img = spikeImg;
+}};
+
 function Start()	
 {	
 	//Find the sources for the assets
 	playerImg.src = "Assets/Metal_Box.png"
-	crateImg.src = 'Assets/wooden_deck.png';
-	jumpAudio.src = "Assets/Jump.mp3";
-	buttonAudio.src = 'Assets/Click.mp3';
-	backgroundAudio.src = "Assets/Background.mp3";
-	
+	crateImg.src = 'Assets/wooden_deck.png';	
+	spikeImg.src = "Assets/Spike.png";
+	jumpAudio.src = 'Assets/Jump.mp3';
+	buttonAudio.src = "Assets/Click.mp3";
+	backgroundAudio.src = 'Assets/Background.mp3';
+
 	//Setup the game
 	GameSetup();
 
@@ -173,6 +199,10 @@ function GameSetup()
 		boxes.push(new Crate(boxes[14].x + 500, -950, platform.width, platform.height, platform.img));
 	}
 
+	for(var i = 0; i < boxes.length; i++)
+	{
+		spikes.push(new Spike(-100, -100, 40, 50, spikeImg));
+	}
 
 	//Set up the player character
 	player = new Player(boxes[2].x + 30, boxes[2].y - 200, playerImg, 0 , 0, 100, 100);
@@ -187,12 +217,28 @@ function Update()
 		//Clear the game context
 		ctxG.clearRect(0, 0, windowWidth, windowHeight);
 
+		if(bckg1.y > windowHeight)
+		{
+			bckg1.y = -windowHeight;
+		}
+		else if (bckg2.y > windowHeight)
+		{
+			bckg2.y = -windowHeight;
+		}
+
+		bckg1.y++;
+		bckg2.y++;
+
+		ctxG.drawImage(bckg1.img, bckg1.x, bckg1.y, bckg1.width, bckg1.height + 10);
+		ctxG.drawImage(bckg2.img, bckg2.x, bckg2.y, bckg2.width, bckg2.height + 10);
+
 		//For each platform check if there are any collisons
 		for (var i = 0; i < boxes.length; i++) 
 		{
 			var col;
+			var type = "box";
 			//Check if player collides with platform
-			col = colCheck(player, boxes[i]);
+			col = colCheck(player, boxes[i], type);
 
 			//Set the player collison direction
 			if(playerDir != col)
@@ -201,8 +247,15 @@ function Update()
 				break;
 			}
 		}
+
+				//For each platform check if there are any collisons
+		for (var i = 0; i < spikes.length; i++) 
+		{
+			var type = "spike";
+			//Check if player collides with platform
+			colCheck(player, spikes[i], type);
+		}
 		
-		//vUpdate();
 		//Calls the platform update
 		cUpdate();
 		//Calls the player update
@@ -298,7 +351,7 @@ function Update()
 
 		//Set the font, color and alignment for text to display the score
 		ctxG.font = "20px Arial";
-		ctxG.fillStyle = "black";
+		ctxG.fillStyle = "white";
 		ctxG.textAlign = "right";
 		ctxG.fillText("Score: " + Math.floor(score), 100, 30);
 
@@ -339,7 +392,7 @@ function Update()
 }
 
 //Function to check for collisons
-function colCheck(shapeA, shapeB) {
+function colCheck(shapeA, shapeB, type) {
 	
 	//Get the vectors to check against
 	var vX = (shapeA.x + (shapeA.width / 2)) - (shapeB.x + (shapeB.width / 2)),	vY = (shapeA.y + (shapeA.height / 2)) - (shapeB.y + (shapeB.height / 2)),
@@ -383,7 +436,15 @@ function colCheck(shapeA, shapeB) {
 			colDir = null;
 		}
 
-		//Return the collsion type
-		return colDir;
+		if(type == "box")
+		{
+			//Return the collsion type
+			return colDir;
+		}
+		else if (type == "spike")
+		{
+			playerDeath = true;
+			return;
+		}
 	}
 }	
