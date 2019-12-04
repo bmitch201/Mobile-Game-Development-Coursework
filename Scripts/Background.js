@@ -9,11 +9,16 @@
 	var ctxG = canvas.getContext("2d");
 	var ctxB = canvasB.getContext("2d");
 
+	var backgroundImg = new Image();
+	backgroundImg.src = "Assets/Background.png";
+
 	canvas.width = windowWidth;
-	canvas.height = windowHeight * 2;
+	canvas.height = windowHeight;
 
 	canvasM.width = windowWidth;
 	canvasM.height = windowHeight;
 
 	canvasB.width = windowWidth;
 	canvasB.height = windowHeight;
+
+	ctxB.drawImg(backgroundImg, 0, 0, windowWidth, windowHeight);
