@@ -18,6 +18,7 @@ var state;
 
 var score = 0;
 var highScore = 0;
+var localStorageName = "localStorage";
 
 var platform = {
 	width : 350,
@@ -52,6 +53,8 @@ class Spike { constructor(x, y, width, height, spikeImg)
 
 function Start()	
 {	
+	ctxB.drawImage(backgroundImg, 0, 0, windowWidth, windowHeight);
+
 	//Find the sources for the assets
 	playerImg.src = "Assets/Metal_Box.png"
 	crateImg.src = 'Assets/wooden_deck.png';	
@@ -72,141 +75,105 @@ function Start()
 	//Set the state to the main menu
 	state = states[0];
 
-	//Check for cookies
-	if(document.cookie != null)
-	{
-		highScore = getCookie("Highscore")
-		console.log(highScore);
-	}
+	highScore = localStorage.getItem(localStorageName) == null ? 0 : localStorage.getItem(localStorageName);
 
 	//Call the start function for the main menu
 	mStart();
 }
 
-//Cookies in order to save highscore *WORKS ON MOST BROWSERS NOT CHROME*
-function getCookie(cookieName) 
-{
-  //Saves the name of the cookie to be found
-  var name = cookieName + "=";
-  //Takes the name of the cookie and decodes it
-  var decodedCookie = decodeURIComponent(document.cookie);
-  //Splits the cookie in order to get the specific cookie
-  var cookieEnd = decodedCookie.split(';');
-  
-  //For each element of the cookie
-  for(var i = 0; i <cookieEnd.length; i++) 
-  {
-    var cookie = cookieEnd[i];
-    
-    //While the cookie character is blank
-    while (cookie.charAt(0) == ' ') 
-    {
-      cookie = cookie.substring(1);
-    }
-    
-    //If cookie found return cookie
-    if (cookie.indexOf(name) == 0) 
-    {
-      return cookie.substring(name.length, cookie.length);
-    }
-  }
-  //If no cookie return nothing 
-  return "";
-}
-
 function GameSetup()
 {
 	//Setup the platforms to be used in the game
-	boxes.push(new Crate(Math.random() * (canvas.width - 500), 800, platform.width, platform.height, platform.img));
+	platforms.push(new Crate(Math.random() * (canvas.width - 500), 800, platform.width, platform.height, platform.img));
 	//If the previous box is on the left side of the canvas then spawn the platform on the right
-	if(boxes[0].x > canvas.width / 2)
+	if(platforms[0].x > canvas.width / 2)
 	{
-		boxes.push(new Crate(boxes[0].x - 500, 800, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[0].x - 500, 800, platform.width, platform.height, platform.img));
 	}
 	//Else if the canvas is on the right side then spawn the platform on the left
 	else
 	{
-		boxes.push(new Crate(boxes[0].x + 500, 800, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[0].x + 500, 800, platform.width, platform.height, platform.img));
 	}	
 
-	boxes.push(new Crate(Math.random() * (canvas.width - 500), 550, platform.width, platform.height, platform.img));
-	if(boxes[2].x > canvas.width / 2)
+	platforms.push(new Crate(Math.random() * (canvas.width - 500), 550, platform.width, platform.height, platform.img));
+	if(platforms[2].x > canvas.width / 2)
 	{
-		boxes.push(new Crate(boxes[2].x - 500, 550, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[2].x - 500, 550, platform.width, platform.height, platform.img));
 	}
 	else
 	{
-		boxes.push(new Crate(boxes[2].x + 500, 550, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[2].x + 500, 550, platform.width, platform.height, platform.img));
 	}
 
-	boxes.push(new Crate(Math.random() * (canvas.width - 500), 300, platform.width, platform.height, platform.img));
-	if(boxes[4].x > canvas.width / 2)
+	platforms.push(new Crate(Math.random() * (canvas.width - 500), 300, platform.width, platform.height, platform.img));
+	if(platforms[4].x > canvas.width / 2)
 	{
-		boxes.push(new Crate(boxes[4].x - 500, 300, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[4].x - 500, 300, platform.width, platform.height, platform.img));
 	}
 	else
 	{
-		boxes.push(new Crate(boxes[4].x + 500, 300, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[4].x + 500, 300, platform.width, platform.height, platform.img));
 	}
 
-	boxes.push(new Crate(Math.random() * (canvas.width - 500), 50, platform.width, platform.height, platform.img));
-	if(boxes[6].x > canvas.width / 2)
+	platforms.push(new Crate(Math.random() * (canvas.width - 500), 50, platform.width, platform.height, platform.img));
+	if(platforms[6].x > canvas.width / 2)
 	{
-		boxes.push(new Crate(boxes[6].x - 500, 50, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[6].x - 500, 50, platform.width, platform.height, platform.img));
 	}
 	else
 	{
-		boxes.push(new Crate(boxes[6].x + 500, 50, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[6].x + 500, 50, platform.width, platform.height, platform.img));
 	}
 
-	boxes.push(new Crate(Math.random() * (canvas.width - 500), -200, platform.width, platform.height, platform.img));
-	if(boxes[8].x > canvas.width / 2)
+	platforms.push(new Crate(Math.random() * (canvas.width - 500), -200, platform.width, platform.height, platform.img));
+	if(platforms[8].x > canvas.width / 2)
 	{
-		boxes.push(new Crate(boxes[8].x - 500, -200, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[8].x - 500, -200, platform.width, platform.height, platform.img));
 	}
 	else
 	{
-		boxes.push(new Crate(boxes[8].x + 500, -200, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[8].x + 500, -200, platform.width, platform.height, platform.img));
 	}
 
-	boxes.push(new Crate(Math.random() * (canvas.width - 500), -450, platform.width, platform.height, platform.img));
-	if(boxes[10].x > canvas.width / 2)
+	platforms.push(new Crate(Math.random() * (canvas.width - 500), -450, platform.width, platform.height, platform.img));
+	if(platforms[10].x > canvas.width / 2)
 	{
-		boxes.push(new Crate(boxes[10].x - 500, -450, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[10].x - 500, -450, platform.width, platform.height, platform.img));
 	}
 	else
 	{
-		boxes.push(new Crate(boxes[10].x + 500, 5-450, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[10].x + 500, 5-450, platform.width, platform.height, platform.img));
 	}
 
-	boxes.push(new Crate(Math.random() * (canvas.width - 500), -700, platform.width, platform.height, platform.img));
-	if(boxes[12].x > canvas.width / 2)
+	platforms.push(new Crate(Math.random() * (canvas.width - 500), -700, platform.width, platform.height, platform.img));
+	if(platforms[12].x > canvas.width / 2)
 	{
-		boxes.push(new Crate(boxes[12].x - 500, -700, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[12].x - 500, -700, platform.width, platform.height, platform.img));
 	}
 	else
 	{
-		boxes.push(new Crate(boxes[12].x + 500, -700, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[12].x + 500, -700, platform.width, platform.height, platform.img));
 	}
 
-	boxes.push(new Crate(Math.random() * (canvas.width - 500), -950, platform.width, platform.height, platform.img));
-	if(boxes[14].x > canvas.width / 2)
+	platforms.push(new Crate(Math.random() * (canvas.width - 500), -950, platform.width, platform.height, platform.img));
+	if(platforms[14].x > canvas.width / 2)
 	{
-		boxes.push(new Crate(boxes[14].x - 500, -950, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[14].x - 500, -950, platform.width, platform.height, platform.img));
 	}
 	else
 	{
-		boxes.push(new Crate(boxes[14].x + 500, -950, platform.width, platform.height, platform.img));
+		platforms.push(new Crate(platforms[14].x + 500, -950, platform.width, platform.height, platform.img));
 	}
 
 	//For each platform create a spike
-	for(var i = 0; i < boxes.length; i++)
+	for(var i = 0; i < platforms.length; i++)
 	{
 		spikes.push(new Spike(-100, -100, 40, 50, spikeImg));
 	}
 
 	//Set up the player character
-	player = new Player(boxes[2].x + 30, boxes[2].y - 200, playerImg, 0 , 0, 100, 100);
+	player = new Player(platforms[2].x + 30, platforms[2].y - 200, playerImg, 0 , 0, 100, 100);
 }
 
 function Update()
@@ -234,12 +201,12 @@ function Update()
 		ctxG.drawImage(bckg2.img, bckg2.x, bckg2.y, bckg2.width, bckg2.height + 10);
 
 		//For each platform check if there are any collisons
-		for (var i = 0; i < boxes.length; i++) 
+		for (var i = 0; i < platforms.length; i++) 
 		{
 			var col;
 			var type = "box";
 			//Check if player collides with platform
-			col = colCheck(player, boxes[i], type);
+			col = colCheck(player, platforms[i], type);
 
 			//Set the player collison direction
 			if(playerDir != col)
@@ -249,7 +216,7 @@ function Update()
 			}
 		}
 
-				//For each platform check if there are any collisons
+		//For each platform check if there are any collisons
 		for (var i = 0; i < spikes.length; i++) 
 		{
 			var type = "spike";
@@ -268,22 +235,7 @@ function Update()
 			//If the player clicks on the top half of the screen
 			if(event.y < windowHeight / 2)
 			{
-				//If the player's collision is equal to null
-				if(playerDir == null)
-				{
-					//Set the players velocity to 0
-					player.velY = 0;
-
-					//If the character y is equal to the previous character y
-					if(player.y == playerY)
-					{		
-						//Play the jump audio
-						jumpAudio.play();
-						//Set the characters velocity allowing them to jump
-						player.velY-=23;
-					}
-				}
-				else if (playerDir == "b")
+				if (playerDir == "b")
 				{
 					//Set the players velocity to 0
 					player.velY = 0;
@@ -364,9 +316,9 @@ function Update()
 			{
 				//Save the score as the highscore
 				highScore = Math.floor(score);
+				//Saves the highscore with local storage
+				localStorage.setItem(localStorageName, highScore);
 				newHS = true;
-				//Save the highscore are a cookie
-				document.cookie = "Highscore = " + highScore;
 			}
 
 			playerDeath = false;

@@ -34,6 +34,12 @@
 			//Decrease player Y speed
 			player.velY = player.velY/1.25;
 		}
+		//If the players collison direction is left or right
+		else if (playerDir === "l" || playerDir === "r") 
+		{
+			//Don't allow them character to move inside the collided object
+			player.velX = 0;
+		}
 		//If neither
 		else
 		{

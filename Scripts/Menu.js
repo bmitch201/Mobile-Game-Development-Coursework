@@ -1,14 +1,8 @@
-var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-window.requestAnimationFrame = requestAnimationFrame;
-
 var backgroundAudio = new Audio();
 
-var title;
 var newHS = false;
 
 var buttonAudio = new Audio();
-var backgroundImg = new Image();
-backgroundImg.src = "Assets/Background.png";
 
 var startBtn = {
 	x : windowWidth/2 - 50,
@@ -19,8 +13,6 @@ var startBtn = {
 
 function mStart()
 {
-	ctxM.drawImage(backgroundImg, 0, 0, windowWidth, windowHeight);
-
 	//Sets up the text to be displayed to the player
 	ctxM.font = "50px Arial";
 	ctxM.fillStyle = "white";
@@ -89,7 +81,7 @@ function mUpdate()
 			ctxM.clearRect(0, 0, windowWidth, windowHeight); 
 			state = states[1];
 			ctxG.clearRect(0, 0, windowWidth, windowHeight);
-			boxes.length = 0;
+			platforms.length = 0;
 			spikes.length = 0;
 			player = 0;
 			score = 0;
@@ -108,7 +100,7 @@ function mUpdate()
 			ctxM.clearRect(0, 0, windowWidth, windowHeight); 
 			state = states[0];
 			ctxG.clearRect(0, 0, windowWidth, windowHeight);
-			boxes.length = 0;
+			platforms.length = 0;
 			spikes.length = 0;
 			player = 0;
 			score = 0;

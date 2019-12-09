@@ -20,5 +20,3 @@
 
 	canvasB.width = windowWidth;
 	canvasB.height = windowHeight;
-
-	ctxB.drawImg(backgroundImg, 0, 0, windowWidth, windowHeight);
